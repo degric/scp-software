@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
-
+use App\Http\Controllers\AdminController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -10,6 +10,4 @@ Route::get('/', function () {
 Route::get('/login', [LoginController::class, 'index'] );
 
 
-Route::get('/admin', function(){
-    return "Hola, si se pudo, /admin";
-});
+Route::get('/admin', [AdminController::class, 'admin']);

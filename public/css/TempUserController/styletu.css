@@ -1,0 +1,25 @@
+body {
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0%;
+    
+}
+
+.btn-login{
+    position: fixed;
+    margin: 10px;
+}
+.container-fluid {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+}
+
+.progress {
+    width: 50vw;
+    margin-bottom: 5vw;
+}
+

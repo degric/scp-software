@@ -17,6 +17,10 @@ class TempUserController extends Controller
         return view('TempUserController.home', ['ip' => $ip, 'networkState' => $networkState]);
     }
 
+    public function comments(){
+        return view('TempUserController.comentarios');
+    }
+
 
     private function getClientIP()
     {

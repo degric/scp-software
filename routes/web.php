@@ -8,6 +8,9 @@ use App\Http\Controllers\TempUserController;
 
 
 Route::get('/', [TempUserController::class, 'index']);
+Route::get('/comments', [TempUserController::class, 'comments']);
+
+
 Route::get('/login', [LoginController::class, 'index'] );
 
 

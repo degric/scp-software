@@ -18,15 +18,21 @@
     </header>
     <div class="container">
         <div class="menus">
-            <a href=""><button>Hola</button></a>
-            <a href=""><button>hol</button></a>
-            <a href=""><button>hol</button></a>
-            <a href=""><button>hol</button></a>
+            <ul>
+                <li><button class="btn-principal">Usuarios</button></li>
+
+                <ul>
+                    <li><a class="btn-sec" href="">Administradores</a></li>
+                    <li><a href="" class="btn-sec">Encargados</a></li>
+                </ul>
+            </ul>
+
+
         </div>
 
 
         <div class="content">
-<i class="bi bi-person-circle"></i>
+            <i class="bi bi-person-circle"></i>
         </div>
     </div>
 </body>

@@ -49,7 +49,7 @@
   <body>
     <!--Boton para login-->
     <button type="button" class="btn-login btn btn-outline-secondary">
-      <i class="bi bi-three-dots-vertical success"></i>
+      <a href="/login/" style="text-decoration: none; color: black;"><i class="bi bi-three-dots-vertical success"></i></a>
     </button>
 
     <!--Informacion Sobre la conexion-->
@@ -78,7 +78,7 @@
           <li class="list-group-item">Nombre de la red: {{$network_name ?? 'Unknow'}}</li>
         </ul>
         <div class="card-body text-center">
-          <a href="#" class="card-link">Comentarios Y Sugerencias</a>
+          <a href="/comments/" class="card-link">Comentarios Y Sugerencias</a>
         </div>
       </div>
     </div>

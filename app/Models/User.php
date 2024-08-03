@@ -27,8 +27,7 @@ class User extends Authenticatable
         'usuario',
         'tipo_usuario',
         'password',
-        'fecha_creacion',
-        'fecha_edicion'
+        
 
 
     ];

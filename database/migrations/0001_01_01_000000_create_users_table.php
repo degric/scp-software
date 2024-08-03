@@ -21,8 +21,6 @@ return new class extends Migration
             $table->string('usuario');
             $table->string('tipo_usuario');
             $table->string('password');
-            $table->timestamp('fecha_creacion')->nullable();
-            $table->timestamp('fecha_edicion')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

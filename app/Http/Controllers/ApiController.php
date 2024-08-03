@@ -52,4 +52,48 @@ class ApiController extends Controller
         
         return response()->json($response);
     }
+
+    public function createUser(Request $request){
+        $data = json_decode($request->getContent());
+        $password = Hash::make($data->password);
+
+
+        $user = User::create([
+            'nombre' => $request->nombre,
+            'password' => $password,
+            'apellido_paterno'=> $request->apellido_paterno,
+            'apellido_materno' => $request->apellido_materno,
+            'email'=> $request->email,
+            'telefono' => $request->telefono,
+            'usuario'=> $request->usuario,
+            'tipo_usuario' => $request->tipo_usuario
+        ]);
+
+        return "Usuario creado exitosamente";
+    }
+    public function deleteUser($id){
+
+        $response = ["status"=>0,"msg"=>""];
+
+        $user = User::find($id);
+
+
+        if(!$user){
+            $response["msg"] = "Usuario no encontrado";
+            $response["status"] = 404;
+            return response()->json($response, 404);
+        } 
+
+        $user->delete();
+        $response["status"] = 200;
+        $response["msg"] = "Usuario eliminado";
+
+
+        return response()->json($response);
+    }
+
+    public function updateUser(Request $request, $id){
+        $user = User::find($id);
+        
+    }
 }

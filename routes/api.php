@@ -15,4 +15,11 @@ Route::get('/getUsers', [ApiController::class, 'getUsers'])->middleware('auth:sa
 Route::get('/getUser/{id}', [ApiController::class, 'getUser'])->middleware('auth:sanctum');
 Route::put('/updateUser/{id}', [ApiController::class, 'updateUser'])->middleware('auth:sanctum');
 
+
+Route::post('/createLab', [ApiController::class, 'createLab'])->middleware('auth:sanctum');
+Route::get('/getLabs', [ApiController::class, 'getLabs'])->middleware('auth:sanctum');
+Route::get('/getLab/{id}', [ApiController::class, 'getLab'])->middleware('auth:sanctum');
+Route::put('/updateLab/{id}', [ApiController::class, 'updateLab'])->middleware('auth:sanctum');
+Route::delete('/deleteLab/{id}', [ApiController::class, 'deleteLab'])->middleware('auth:sanctum');
+
 Route::post('/login',[ApiController::class, 'login']);

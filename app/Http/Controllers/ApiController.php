@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Lab;
+use App\Models\Network;
 use Illuminate\Support\Facades\Hash;
 
 class ApiController extends Controller
@@ -53,14 +54,24 @@ class ApiController extends Controller
     public function getUser(Request $request, $id)
     {
         $user = User::find($id);
-        return $user;
+        if(!$user){
+            return response()->json([
+                "msg" => "Usuario No encontrado"
+            ]);
+        }
+
+        return response()->json([
+            "msg" => "Usuario Encontrado",
+            "data" => $user
+        ]);
     }
+
+
 
     // Funcion para crear un usuario (ruta: /api/createUser)
     public function createUser(Request $request)
     {
-        $data = json_decode($request->getContent());
-        $password = Hash::make($data->password);
+        $password = Hash::make($request->password);
 
         $user = User::create([
             'nombre' => $request->nombre,
@@ -73,43 +84,66 @@ class ApiController extends Controller
             'tipo_usuario' => $request->tipo_usuario,
         ]);
 
-        return 'Usuario creado exitosamente';
+
+
+        return response()->json([
+            "msg" => "Usuario creado exitosamente",
+            "data" => $usuario
+        ]);
     }
+
+
+
+
 
     // Eliminar un usuario a traves del ID (ruta: api/deleteUser/<id>)
     public function deleteUser($id)
     {
-        $response = ['status' => 0, 'msg' => ''];
+    
 
         $user = User::find($id);
 
         if (!$user) {
-            $response['msg'] = 'Usuario no encontrado';
-            $response['status'] = 404;
-            return response()->json($response, 404);
+            return response()->json([
+                "msg" => "Usuario no encontrado",
+                "status" => 404
+            ]);
         }
 
         $user->delete();
-        $response['status'] = 200;
-        $response['msg'] = 'Usuario eliminado';
 
-        return response()->json($response);
+        return response()->json([
+            "msg" => "Usuario elimnado",
+            "status" => 200,
+            "data" => $usuario, 
+        ]);
     }
+
+
+
+
 
     // Actualizar usuario (ruta: /api/updateUser/<id>)
     public function updateUser(Request $request, $id)
     {
         $user = User::find($id);
 
+        if (!$user) {
+            return response()->json([
+                "msg" => "Usuario no encontrado",
+                "status" => 404
+            ]);
+        }
+
         $dataActualizar = [
-            'password' => $request->has('password') ? Hash::make($request->password) : null,
-            'nombre' => $request->has('nombre') ? $request->nombre : null,
-            'apellido_paterno' => $request->has('apellido_paterno') ? $request->apellido_paterno : null,
-            'apellido_materno' => $request->has('apellido_materno') ? $request->apellido_materno : null,
-            'email' => $request->has('email') ? $request->email : null,
-            'telefono' => $request->has('telefono') ? $request->telefono : null,
-            'usuario' => $request->has('usuario') ? $request->usuario : null,
-            'tipo_usuario' => $request->has('tipo_usuario') ? $request->tipo_usuario : null,
+            'password' => $request->password,
+            'nombre' => $request->nombre,
+            'apellido_paterno' => $request->apellido_paterno,
+            'apellido_materno' => $request->apellido_materno,
+            'email' => $request->email,
+            'telefono' => $request->telefono,
+            'usuario' => $request->usuario,
+            'tipo_usuario' => $request->tipo_usuario,
         ];
 
         $dataActualizar = array_filter($dataActualizar, fn ($value) => !is_null($value));
@@ -118,8 +152,17 @@ class ApiController extends Controller
             $user->$field = $value;
         }
         $user->save();
-        return $user;
+
+        return response()->json([
+            "msg" => "Usuario actualizado",
+            "data" => $user,
+            "status" => 200
+        ]);
+
+
+
     }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    }
     /////////////// Laboratorios
 
     // Crear laboratorio (ruta: /api/crateLab/)
@@ -136,15 +179,27 @@ class ApiController extends Controller
             $response = [
                 'msg' => 'No se pudo. ',
             ];
+
+            return response()->json([
+                "msg" => No se pudo crear el laboratorio, 
+                "status" => 500
+            ])
         }
 
-        $response = [
-            'msg' => 'Si se pudo. ',
-            'lab' => $lab,
-        ];
 
-        return $response;
+        return response()->json([
+            "msg" => "Laboratorio creado",
+            "data" => $lab,
+            "status" => 200
+        ]);
     }
+
+
+
+
+
+
+
 
     // Obtener laboratorios (ruta: /api/getLabs)
     public function getLabs()
@@ -173,6 +228,11 @@ class ApiController extends Controller
 
         return $response;
     }
+
+
+
+
+    
     // Eliminar laboratorios (ruta: /api/deleteLab/<id>)
     public function deleteLab($id)
     {
@@ -229,4 +289,126 @@ class ApiController extends Controller
         ];
         return $response;
     }
+
+    ///////////// Redes 
+
+    // Crear Redes (ruta: /api/createNetwork, metodo: post)
+    public function createNetwork(Request $request){
+
+        $network = Network::create([
+            'nombre' => $request->nombre,
+            'ip' => $request->ip,
+            'mascara_red' => $request->mascara_red,
+            'tipo_red' => $request->tipo_red
+        ]);
+
+        if(!$network){
+            return response()->json([
+                "msg"=> "Error al crear la red.",
+                "status"=>404
+            ]);
+        }
+
+        return response()->json([
+            "msg" => "Red creada",
+            "red:" => $network
+        ]);
+    }
+    // Obtener Redes (ruta: /api/getNetworks, metodo: get)
+    public function getNetworks(){
+        $networks = Network::all();
+
+        if(!$networks){
+            return response()->json([
+                "msg"=> "Error al obtener las redes. ",
+                "status" => 404
+            ]);
+        }
+
+        return response()->json([
+            "msg"=>"Redes Obtenidas exitosamente",
+            "data"=> $networks,
+            "status"=> 200
+        ]);
+    }
+
+    // Obtener una Red (ruta: /api/getNetwork/<id>, metodo: get, parametro: id)
+    public function getNetwork($id){
+        $network = Network::find($id);
+
+        if(!$network){
+            return response()->json([
+                "msg" => "Erro al obtener la red.",
+                "status"=> 404
+            ]);
+        }
+
+        return response()->json([
+            "msg"=>"Red obtenida exitosamente",
+            "data"=> $network,
+            "status" => 200
+        ]);
+    }
+
+
+    // Actualizar una red (ruta: /api/updateNetwork/ metodo:post, parametro: id)
+    public function updateNetwork(Request $request, $id){
+        $network = Network::find($id);
+
+        if(!$network){
+            return response()->json([
+                "msg"=> "Red no encontrada.",
+                "status" => 404
+            ]);
+        }
+
+        $dataActualizar = [
+            "nombre" => $request->nombre,
+            "ip" => $request->ip,
+            "mascara_red" => $request->mascara_red,
+            "tipo_red" => $request->tipo_red,
+        ];
+
+        $dataActualizar = array_filter($dataActualizar, fn ($value) => !is_null($value));
+        foreach ($dataActualizar as $field => $value) {
+            $network->$field = $value;
+        }
+
+
+        $network->save();
+        
+
+        return response()->json([
+            "msg" => "Red Actualizada",
+            "status" => 200,
+            "data" => $network,
+        
+        ]);
+
+    }
+    // Eliminar una red (ruta: /api/deleteNetwork, metodo:delete, parametro: id)
+
+    public function deleteNetwork($id){
+
+        $network = Network::find($id);
+
+
+        if(!$network){
+            return response()->json([
+                "msg" => "Red no encontrada",
+                "status" => 404,
+            ]);
+        }
+
+
+
+        $network->delete();
+
+        return response()->json([
+            "msg"=> "Red eliminada",
+            "data"=> $network,
+            "status"=> 200
+        ]);
+    }
+
 }

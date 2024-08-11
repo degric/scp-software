@@ -14,43 +14,38 @@ class ApiUsers extends Controller
     // Funcion para la autenticacion de los usuarios. (ruta: /api/login)
     public function login(Request $request)
     {
-        $response = ['status' => 0, 'msg' => ''];
+    
 
-        $data = json_decode($request->getContent());
-
-        $user = User::where('usuario', $data->usuario)->first();
+        if(!$request->usuario or !$request->password){
+            return "datos faltantes";
+        }
+        $user = User::where('usuario', $request->usuario)->first();
 
         if ($user) {
             $passwordUser = $user->getAttribute('password');
-            if (Hash::check($data->password, $passwordUser)) {
+            if (Hash::check($request->password, $passwordUser)) {
                 $token = $user->createToken('example');
-                $response['msg'] = 'aqui todo bien';
-                $response['status'] = 1;
-                $response['msg'] = $token->plainTextToken;
-            } else {
-                $response['msg'] = 'Credenciales incorrectas';
-            }
-        } else {
-            $response['msg'] = 'Usuario no encontrado';
-        }
+                return response()->json([
+                    "msg"=> "Usuario autenticado",
+                    "status" => 200,
+                    "token" => $token->plainTextToken
+                ]);
+            } 
 
-        return response()->json($response);
-    }
+        return response()->json(["msg"=>"error"]);
+    }}
 
     //Obtener todos los usuarios. (ruta: /api/getUsers/)
-    public function getUsers(Request $request)
+    public function getUsers()
     {
-        if ($request->has('tipo_usuario')) {
-            $users = User::where('tipo_usuario', 'admin')->get();
-        } else {
-            $users = User::all();
-        }
-
+       
+     $users = User::all();
+        
         return response()->json($users);
     }
 
     //Obtener un usuario. (ruta: /api/getUser/<id>)
-    public function getUser(Request $request, $id)
+    public function getUser($id)
     {
         $user = User::find($id);
         if (!$user) {
@@ -133,9 +128,12 @@ class ApiUsers extends Controller
                 "status" => 404
             ]);
         }
-
+        $password = null;
+        if($request->password){
+            $password = Hash::make($request->password);
+        }
         $dataActualizar = [
-            'password' => $request->password,
+            'password' => $password,
             'nombre' => $request->nombre,
             'apellido_paterno' => $request->apellido_paterno,
             'apellido_materno' => $request->apellido_materno,

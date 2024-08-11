@@ -14,7 +14,7 @@
 <body>
     <header>
         <h1></h1>
-        <h1>SCP-System/Admin</h1> <a href="{{route('logout')}}"><i class="bi bi-person-circle"></i></a>
+        <h1>{{$headTitle}}</h1> <a href="{{route('logout')}}"><i class="bi bi-person-circle"></i></a>
     </header>
     <div class="container">
         <div class="menus">
@@ -49,7 +49,7 @@
 
 
         <div class="content">
-            <i class="bi bi-person-circle"></i>
+            {{$slot}}
         </div>
     </div>
 </body>

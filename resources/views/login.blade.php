@@ -12,13 +12,14 @@
     </header>
     <div class="login-container">
         <h2>Inicio de Sesión</h2>
-        <form action="#" method="POST" class="form">
+        <form action="{{route('login')}}" method="POST" class="form">
+            @csrf
         
-            <input type="text" id="username" name="username" placeholder="Usuario " required>
+            <input type="text" id="usuario" name="usuario" placeholder="Usuario " required>
 
             <input type="password" id="password" name="password" placeholder="Contraseña " required>
 
-            <button type="submit">Iniciar Sesión</button>
+            <button type="submit">Iniciar Sessión</button>
         </form>
     </div>
 

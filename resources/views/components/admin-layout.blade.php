@@ -14,25 +14,29 @@
 <body>
     <header>
         <h1></h1>
-        <h1>{{$headTitle}}</h1> <a href="{{route('logout')}}"><i class="bi bi-person-circle"></i></a>
+        <h1>SCP-System/Admin</h1> <a href="{{ route('logout') }}"><i class="bi bi-person-circle"></i></a>
     </header>
     <div class="container">
         <div class="menus">
             <ul>
-                <li><button class="btn-principal">Usuarios</button></li>
+                <li>
 
-                <ul>
-                    <li><a class="btn-sec" href="/admin/users/admins">Administradores</a></li>
-                    <li><a href="/admin/encLabs" class="btn-sec">Encargados</a></li>
-                </ul>
+
+                    <form action="{{ url('/admin/users') }}" method="GET">
+                        <button type="submit" class="btn-principal">Usuarios</button>
+                    </form>
+
+
             </ul>
-            
+
             <ul>
                 <li><button class="btn-principal">Laboratorios</button></li>
-
                 <ul>
-                    <li><a class="btn-sec" href="/admin/lab/create">Crear</a></li>
-                    <li><a href="/admin/lab/management" class="btn-sec">Gestionar</a></li>
+                    @foreach ($data->labs as $lab)
+                        <li>
+                            <a href="" class="btn-sec">{{ $lab->nombre }}</a>
+                        </li>
+                    @endforeach
                 </ul>
             </ul>
 
@@ -40,8 +44,13 @@
                 <li><button class="btn-principal">Redes</button></li>
 
                 <ul>
-                    <li><a class="btn-sec" href="">Administradores</a></li>
-                    <li><a href="" class="btn-sec">Encargados</a></li>
+                    @foreach ($data->networks as $net)
+                        <li>
+                            <a href="" class="btn-sec">
+                                {{ $net->nombre }}
+                            </a>
+                        </li>
+                    @endforeach
                 </ul>
             </ul>
 

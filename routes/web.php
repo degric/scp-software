@@ -1,10 +1,12 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LabController;
 use App\Http\Controllers\TempUserController;
+use App\Http\Controllers\UsersController;
 
 // Vista Principal para los Alumnos. 
 Route::get('/', [TempUserController::class, 'index'])->name('home');
@@ -23,7 +25,35 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 
 
 
-// Vistas del administrador
+
+Route::middleware('auth')->group(function () {
+    // Ruta principal para el admin
+    Route::get('/admin', [AdminController::class, 'admin'])->name('dashboard');
+
+    // Ruta para la vista principal de usuarios
+    Route::get('/admin/users', [UsersController::class, 'users_view'])->name('showUsers');
+
+    // Rutas para la gestión de usuarios
+    Route::prefix('admin/user')->group(function () {
+        Route::get('/updateUser/{id}', [UsersController::class, 'userUpdate_view'])->name('updateUser_view');
+        Route::get('/createUser', [UsersController::class, 'userCreate_view'])->name('showCreateForm');
+        Route::post('/createUser', [UsersController::class, 'createUser'])->name('createUser');
+        Route::put('/updateUser/{id}', [UsersController::class, 'updateUser'])->name('updateUser');
+        Route::delete('/deleteUser/{id}', [UsersController::class, 'deleteUser'])->name('deleteUser');
+    });
+
+
+    //Laboratorios
+
+    Route::get('/admin/labs', [LabController::class, 'showLabsView'])->name('showLabsView');
+    
+});
+
+
+
+
+
+/*// Vistas del administrador
 
 Route::get('/admin', [AdminController::class, 'admin'])->middleware('auth')->name('dashboard');
 Route::get('/admin/users/admins', [AdminController::class, 'users_admins'])->middleware('auth');
@@ -39,6 +69,7 @@ Route::put("/admin/updateUser/{id}", [AdminController::class, 'updateUser'])->mi
 
 // Laboratorios
 
+/*
 Route::get("/admin/lab/create", [LabController::class, "create_view"])->middleware("auth");
 Route::post("/admin/createLab", [LabController::class, "createLab"])->middleware("auth")->name("createLab");
 Route::get('/admin/lab/management', [LabController::class, "management"])->middleware("auth");
@@ -46,6 +77,10 @@ Route::delete('/admin/deleteLab/{id}', [LabController::class, "deleteLab"])->mid
 Route::get("/admin/lab/update/{id}", [LabController::class, "update_view"])->middleware("auth");
 Route::put("/admin/updateLab/{id}" , [LabController::class, "updateLab"])->middleware("auth")->name("updateLab");
 
+
+Route::get("/admin/network/create", [NetworkController::class, "create_view"])->middleware("auth");
+Route::post("/admin/createNetwork", [NetworkController::class, "createNetwork"])->middleware("auth")->name("createNetwork");
+*/
 
 
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');

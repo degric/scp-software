@@ -30,7 +30,7 @@
             </ul>
 
             <ul>
-                <li><button class="btn-principal">Laboratorios</button></li>
+                <li><form action="{{url('/admin/labs')}}" method="GET"><button class="btn-principal" type="submit">Laboratorios</button></form></li>
                 <ul>
                     @foreach ($data->labs as $lab)
                         <li>
@@ -41,7 +41,7 @@
             </ul>
 
             <ul>
-                <li><button class="btn-principal">Redes</button></li>
+                <li><form action="{{url('/admin/networks')}}" method="GET"><button class="btn-principal" type="submit">Redes</button></form></li>
 
                 <ul>
                     @foreach ($data->networks as $net)

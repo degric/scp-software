@@ -8,6 +8,9 @@ use App\Http\Controllers\LabController;
 use App\Http\Controllers\TempUserController;
 use App\Http\Controllers\UsersController;
 
+use App\Http\Controllers\NetworkController;
+
+
 // Vista Principal para los Alumnos. 
 Route::get('/', [TempUserController::class, 'index'])->name('home');
 
@@ -46,7 +49,26 @@ Route::middleware('auth')->group(function () {
     //Laboratorios
 
     Route::get('/admin/labs', [LabController::class, 'showLabsView'])->name('showLabsView');
-    
+
+    Route::prefix('admin/labs')->group(function () {
+        Route::get('/createLab', [LabController::class, 'showCreateFormLab'])->name("showCreateFormLab");
+        Route::post('/createLab', [LabController::class, 'createLab'])->name('createLab');
+        Route::delete('/deleteLab/{id}', [LabController::class, 'deleteLab'])->name('deleteLab');
+        Route::get('/showUpdateLab/{id}', [LabController::class, 'showUpdateLab'])->name('showUpdateLab');
+        Route::put('/showUpdateLab/{id}', [LabController::class, 'updateLab'])->name('updateLab');
+    });
+
+
+
+    Route::get('/admin/networks', [NetworkController::class, 'showNetworksView'])->name('showNetworksView');
+
+    Route::prefix('admin/networks')->group(function () {
+        Route::get('/createNetwork', [NetworkController::class, 'showCreateFormNetwork'])->name("showCreateFormNetwork");
+        Route::post('/createNetwork', [NetworkController::class, 'createNetwork'])->name('createNetwork');
+        Route::delete('/deleteNetwork/{id}', [NetworkController::class, 'deleteNetwork'])->name('deleteNetwork');
+        Route::get('/showUpdateNetwork/{id}', [NetworkController::class, 'showUpdateNetwork'])->name('showUpdateNetwork');
+        Route::put('/showUpdateNetwork/{id}', [NetworkController::class, 'updateNetwork'])->name('updateNetwork');
+    });
 });
 
 

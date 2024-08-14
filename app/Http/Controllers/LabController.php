@@ -4,15 +4,43 @@ namespace App\Http\Controllers;
 
 
 use Illuminate\Http\Request;
-use App\Models\Lab;
+
 use Carbon\Carbon;
+use App\Models\Network;
+use App\Models\Lab;
 
 class LabController extends Controller
 {
-    public function create_view()
+
+    protected $data;
+    public function __construct()
     {
-        return view('LabController.create-view');
+        // Inicializar la propiedad $data
+        $this->data = new \stdClass();
+        $this->data->networks = Network::all();
+        $this->data->labs = Lab::all();
     }
+
+
+
+
+    public function showLabsView()
+    {
+        $data = $this->data;
+
+        return view('Admin.Labs.labs_view', compact('data'));
+    }
+
+
+
+    public function showCreateFormLab()
+    {
+        $data = $this->data;
+
+        return view('Admin.Labs.create_view', compact('data'));
+    }
+
+
 
     public function createLab(Request $request)
     {
@@ -23,20 +51,7 @@ class LabController extends Controller
             'mascara_red' => $request->mascara_red
         ]);
 
-        return redirect('/admin/lab/create');
-    }
-
-    public function management()
-    {
-        $data = Lab::all()->map(function ($lab) {
-
-            $lab->created_at = Carbon::parse($lab->created_at)->setTimezone('America/Mexico_City');
-            $lab->updated_at = Carbon::parse($lab->updated_at)->setTimezone('America/Mexico_City');
-            return $lab;
-        });
-
-
-        return view('LabController.management-view', compact('data'));
+        return redirect('/admin/labs');
     }
 
     public function deleteLab($id)
@@ -44,18 +59,23 @@ class LabController extends Controller
         $lab = Lab::find($id);
 
         $lab->delete();
-        return redirect('/admin/lab/management');
+        return redirect('/admin/labs');
     }
 
-    public function update_view($id)
+
+    public function showUpdateLab($id)
     {
+        $data = $this->data;
 
-        $data = Lab::find($id);
-        $data->created_at = Carbon::parse($data->created_at)->setTimezone('America/Mexico_City');
-        $data->updated_at = Carbon::parse($data->updated_at)->setTimezone('America/Mexico_City');
 
-        return view('LabController.update-view', compact('data'));
+
+        $lab = Lab::find($id);
+        $lab->created_at = Carbon::parse($lab->created_at)->setTimezone('America/Mexico_City');
+        $lab->updated_at = Carbon::parse($lab->updated_at)->setTimezone('America/Mexico_City');
+
+        return view('Admin.Labs.update_view', compact('data', 'lab'));
     }
+
 
     public function updateLab(Request $request, $id)
     {
@@ -76,6 +96,6 @@ class LabController extends Controller
 
         $lab->save();
 
-        return redirect('/admin/lab/management');
+        return redirect('/admin/labs');
     }
 }

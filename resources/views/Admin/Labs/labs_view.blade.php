@@ -41,6 +41,7 @@
                     <form action="{{route('showUpdateLab', ['id'=>$lab->id])}}" method="GET" style="display:inline;">
                         <button class="btn btn-update">Actualizar</button>
                     </form>
+                    <a href="/admin/labs/{{$lab->id}}" class="btn btn-update" style="background: blue;  text-decoration: none;">Administrar</a>
 
                 </div>
             </div>

@@ -13,7 +13,7 @@
             }
         </style>
 
-        <h1>Actualizar Laboratorio </h1>
+        <h1>Actualizar Red </h1>
 
 
 
@@ -22,7 +22,7 @@
     <div class="elements">
 
 
-        <form action="{{ route('updateLab', ['id' => $lab->id]) }}" method="POST">
+        <form action="{{ route('updateNetwork', ['id' => $network->id]) }}" method="POST">
             <div class="card cardOne">
                 <div class="card-header">
                     <h2>Complete los Campos</h2>
@@ -31,6 +31,7 @@
 
                     @csrf
                     @method('PUT')
+
                     <table class="tableUser">
                         <style>
                             .tableUser tr td,
@@ -46,28 +47,34 @@
                         </style>
                         <tr>
                             <th>Nombre: </th>
-                            <td><input type="text" name="nombre" placeholder="{{ $lab->nombre }}"></td>
-                        </tr>
-                        <tr>
-                            <th>Planta: </th>
-                            <td><input type="text" name="planta" placeholder="{{ $lab->planta }}">
-                            </td>
+                            <td><input type="text"  name="nombre" placeholder="{{$network->nombre}}"></td>
                         </tr>
                         <tr>
                             <th>Ip: </th>
-                            <td><input type="text" name="red" placeholder="{{ $lab->red }}"></td>
+                            <td><input type="text"  name="ip" placeholder="{{$network->ip}}">
+                            </td>
                         </tr>
+                      
                         <tr>
                             <th>Mascara de Red: </th>
-                            <td><input type="text" " name="mascara_red" placeholder="{{ $lab->mascara_red }}"></td>
+                            <td><input type="text"  " name="mascara_red" placeholder="{{$network->mascara_red}}"></td>
+                        </tr>
+                        <tr>
+                            <th>Tipo de res: </th>
+                            <td><input type="text"  name="tipo_red" placeholder="{{$network->tipo_red}}">
+                            </td>
                         </tr>
                         <tr>
                             <th>Creado: </th>
-                            <td>{{ $lab->created_at }}</td>
+                            <td>
+                                <p>{{$network->created_at}}</p>
+                            </td>
                         </tr>
                         <tr>
                             <th>Actualizado: </th>
-                            <td>{{ $lab->updated_at }}</td>
+                            <td>
+                                <p>{{$network->updated_at}}</p>
+                            </td>
                         </tr>
 
 
@@ -81,9 +88,8 @@
                     <button class="btn btn-update" style="background: green;" type="submit">Actualizar</button>
 
 
-                    <a href="{{ url('/admin/labs') }}" class="btn btn-update" style="background: grey;  text-decoration: none">Cancelar</a>
-
-                    
+                    <a href="{{ url('/admin/networks') }}" class="btn btn-update"
+                        style="background: grey;  text-decoration: none">Cancelar</a>
 
                 </div>
             </div>

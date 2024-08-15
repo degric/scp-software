@@ -13,8 +13,8 @@
             }
         </style>
 
-        <h1>Laboratorios </h1>
-        <h3><a href="{{ route('showCreateFormLab') }}" style="text-decoration: none; color: black;">Crear</a></h3>
+        <h1>Redes </h1>
+        <h3><a href="{{ route('showCreateFormNetwork') }}" style="text-decoration: none; color: black;">Crear</a></h3>
 
 
     </div>
@@ -26,19 +26,20 @@
                     <h2>{{ $net->nombre }}</h2>
                 </div>
                 <div class="card-body">
-                    <p><strong>Nombre Del Laboratorio</strong>
+                    <p><strong>Nombre
+                    </strong>
                         {{ $net->nombre }}</p>
                     
                     <p><strong>Red: </strong> {{ $net->ip . '/' . $net->mascara_red }}</p>
                 </div>
                 <div class="card-footer">
-                    <form action="" method="POST" style="display:inline;">
+                    <form action="{{route('deleteNetwork', ['id' => $net->id])}}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-delete">Eliminar</button>
                     </form>
 
-                    <form action="" method="GET" style="display:inline;">
+                    <form action="{{route('showUpdateNetwork', ['id'=>$net->id])}}" method="GET" style="display:inline;">
                         <button class="btn btn-update">Actualizar</button>
                     </form>
 

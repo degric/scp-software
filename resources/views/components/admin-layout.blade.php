@@ -13,7 +13,7 @@
 
 <body>
     <header>
-        <h1></h1>
+        <h1><a class="btn-principal" href="/admin/" style="text-decoration: none; color: black;">Inicio</a></h1>
         <h1>SCP-System/Admin</h1> <a href="{{ route('logout') }}"><i class="bi bi-person-circle"></i></a>
     </header>
     <div class="container">

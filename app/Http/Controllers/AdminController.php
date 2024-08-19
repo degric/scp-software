@@ -31,7 +31,7 @@ class AdminController extends Controller
         $data->networks = $networks;
 
         
-        return view('AdminController.home', compact('data'));
+        return view('Admin.home', compact('data'));
     }
 
 }

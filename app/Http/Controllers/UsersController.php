@@ -46,6 +46,8 @@ class UsersController extends Controller
 
         $data = $this->data;
         $user = User::find($id);
+        $labs = Lab::all();
+        $data->labs = $labs;
         $user->created_at = Carbon::parse($user->created_at)->setTimezone('America/Mexico_City');
         $user->updated_at = Carbon::parse($user->updated_at)->setTimezone('America/Mexico_City');
 
@@ -80,13 +82,10 @@ class UsersController extends Controller
 
     public function updateUser(Request $request, $id)
     {
-
         $user = User::find($id);
-
-        $password = null;
-        if ($request->password) {
-            $password = Hash::make($request->password);
-        }
+    
+   
+        $password = $request->password ? Hash::make($request->password) : null;
         $dataActualizar = [
             'password' => $password,
             'nombre' => $request->nombre,
@@ -97,17 +96,24 @@ class UsersController extends Controller
             'usuario' => $request->usuario,
             'tipo_usuario' => $request->tipo_usuario,
         ];
-
+    
         $dataActualizar = array_filter($dataActualizar, fn($value) => !is_null($value));
-
+    
         foreach ($dataActualizar as $field => $value) {
             $user->$field = $value;
         }
-
+    
         $user->save();
-
+    
+       
+        if ($user->tipo_usuario == 'enclab') {
+            $labIds = $request->input('labs', []); 
+            $user->labs()->sync($labIds); 
+        }
+    
         return redirect("/admin/users");
     }
+    
 
     public function deleteUser($id)
     {

@@ -85,6 +85,21 @@
                             </td>
                         </tr>
                         <tr>
+                            @if ($user->tipo_usuario === 'enclab')
+                                <th>Laboratorios a Administrar:</th>
+                                <td>
+                                    @foreach ($data->labs as $lab)
+                                        <div>
+                                            <input type="checkbox" id="lab_{{ $lab->id }}" name="labs[]"
+                                                value="{{ $lab->id }}"
+                                                {{ in_array($lab->id, $user->labs->pluck('id')->toArray()) ? 'checked' : '' }}>
+                                            <label for="lab_{{ $lab->id }}">{{ $lab->nombre }}</label>
+                                        </div>
+                                    @endforeach
+                                </td>
+                            @endif
+                        </tr>
+                        <tr>
                             <th>Fecha de Creacion: </th>
                             <td>{{ $user->created_at }}</td>
                         </tr>

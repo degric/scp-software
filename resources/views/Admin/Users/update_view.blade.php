@@ -14,7 +14,7 @@
         </style>
 
         <h1>Actualizar Usuario</h1>
-        
+
 
 
     </div>
@@ -98,12 +98,15 @@
 
                 </div>
                 <div class="card-footer">
-                    <form action="{{ route('deleteUser', ['id' => $user->id]) }}" method="POST"
-                        style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-delete">Eliminar</button>
-                    </form>
+
+                    @if ($user->usuario !== 'admin')
+                        <form action="{{ route('deleteUser', ['id' => $user->id]) }}" method="POST"
+                            style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-delete">Eliminar</button>
+                        </form>
+                    @endif
 
 
                     @method('PUT')
@@ -111,7 +114,7 @@
 
 
                     <form action="{{ url('/admin/users') }}" method="GET" style="display:inline;">
-                      
+
 
                         <button class="btn btn-update">Cancelar</button>
                     </form>

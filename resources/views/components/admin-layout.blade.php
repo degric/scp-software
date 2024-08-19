@@ -13,8 +13,8 @@
 
 <body>
     <header>
-        <h1><a class="btn-principal" href="/admin/" style="text-decoration: none; color: black;">Inicio</a></h1>
-        <h1>SCP-System/Admin</h1> <a href="{{ route('logout') }}"><i class="bi bi-person-circle"></i></a>
+        <h1><a class="btn-principal" href="/admin/" style="text-decoration: none; color: black; ">Inicio</a></h1>
+        <h1>SCP-System/Admin</h1> <a href="{{ route('logout') }}"><i class="bi bi-box-arrow-right"></i></a>
     </header>
     <div class="container">
         <div class="menus">
@@ -30,23 +30,29 @@
             </ul>
 
             <ul>
-                <li><form action="{{url('/admin/labs')}}" method="GET"><button class="btn-principal" type="submit">Laboratorios</button></form></li>
+                <li>
+                    <form action="{{ url('/admin/labs') }}" method="GET"><button class="btn-principal"
+                            type="submit">Laboratorios</button></form>
+                </li>
                 <ul>
                     @foreach ($data->labs as $lab)
                         <li>
-                            <a href="" class="btn-sec">{{ $lab->nombre }}</a>
+                            <a href="/admin/labs/{{ $lab->id }}" class="btn-sec">{{ $lab->nombre }}</a>
                         </li>
                     @endforeach
                 </ul>
             </ul>
 
             <ul>
-                <li><form action="{{url('/admin/networks')}}" method="GET"><button class="btn-principal" type="submit">Redes</button></form></li>
+                <li>
+                    <form action="{{ url('/admin/networks') }}" method="GET"><button class="btn-principal"
+                            type="submit">Redes</button></form>
+                </li>
 
                 <ul>
                     @foreach ($data->networks as $net)
                         <li>
-                            <a href="" class="btn-sec">
+                            <a href="/admin/networks/{{ $net->id }}" class="btn-sec">
                                 {{ $net->nombre }}
                             </a>
                         </li>
@@ -58,6 +64,8 @@
 
 
         <div class="content">
+
+
             {{$slot}}
         </div>
     </div>

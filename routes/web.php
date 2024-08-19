@@ -56,6 +56,8 @@ Route::middleware('auth')->group(function () {
         Route::delete('/deleteLab/{id}', [LabController::class, 'deleteLab'])->name('deleteLab');
         Route::get('/showUpdateLab/{id}', [LabController::class, 'showUpdateLab'])->name('showUpdateLab');
         Route::put('/showUpdateLab/{id}', [LabController::class, 'updateLab'])->name('updateLab');
+
+        Route::get('/{id}' , [LabController::class, 'showLab'])->name('showLab');
     });
 
 
@@ -68,6 +70,8 @@ Route::middleware('auth')->group(function () {
         Route::delete('/deleteNetwork/{id}', [NetworkController::class, 'deleteNetwork'])->name('deleteNetwork');
         Route::get('/showUpdateNetwork/{id}', [NetworkController::class, 'showUpdateNetwork'])->name('showUpdateNetwork');
         Route::put('/showUpdateNetwork/{id}', [NetworkController::class, 'updateNetwork'])->name('updateNetwork');
+
+        Route::get('/{id}', [NetworkController::class, 'showNetwork'])->name('showNetwork');
     });
 });
 

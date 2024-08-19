@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Network;
 use App\Models\Lab;
+use App\Models\Computer;
 
 class LabController extends Controller
 {
@@ -97,5 +98,18 @@ class LabController extends Controller
         $lab->save();
 
         return redirect('/admin/labs');
+    }
+
+    public function showLab($id){
+
+
+        $data = $this->data;
+
+        $lab = Lab::find($id);
+        $computers = Computer::where('lab_id', $id)->get();
+
+        return view('Admin.Labs.showlab', compact('data', 'lab','computers'));
+
+
     }
 }

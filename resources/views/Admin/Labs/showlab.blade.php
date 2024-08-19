@@ -13,36 +13,34 @@
             }
         </style>
 
-        <h1>Redes </h1>
-        <h3><a href="{{ route('showCreateFormNetwork') }}" style="text-decoration: none; color: black;">Crear</a></h3>
-
+        <h1>Dispositivos en: {{$lab->nombre }} </h1>
+        
 
     </div>
 
     <div class="elements">
-        @foreach ($data->networks as $net)
+        @foreach ($computers as $computer)
             <div class="card">
                 <div class="card-header">
-                    <h2>{{ $net->nombre }}</h2>
+                    <h2>{{ $computer->id }}</h2>
                 </div>
                 <div class="card-body">
-                    <p><strong>Nombre
-                    </strong>
-                        {{ $net->nombre }}</p>
-                    
-                    <p><strong>Red: </strong> {{ $net->ip . '/' . $net->mascara_red }}</p>
+                    <p><strong>IP:</strong>
+                        {{ $computer->ip }}</p>
+                    <p><strong>MAC: </strong> {{ $computer->mac }}</p>
+                    <p><strong>Sistema Operativo: </strong> {{ $computer->sistema_operativo }}</p>
                 </div>
                 <div class="card-footer">
-                    <form action="{{route('deleteNetwork', ['id' => $net->id])}}" method="POST" style="display:inline;">
+                    <form action="" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-delete">Eliminar</button>
                     </form>
 
-                    <form action="{{route('showUpdateNetwork', ['id'=>$net->id])}}" method="GET" style="display:inline;">
+                    <form action="" method="GET" style="display:inline;">
                         <button class="btn btn-update">Actualizar</button>
                     </form>
-                    <a href="/admin/networks/{{$net->id}}" class="btn btn-update" style="background: blue;  text-decoration: none; display: inline;">Administrar</a>
+                    <a href="" class="btn btn-update" style="background: blue;  text-decoration: none;">Administrar</a>
 
                 </div>
             </div>

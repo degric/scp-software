@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Network;
 use App\Models\Lab;
 use Carbon\Carbon;
-
+use App\Models\Device;
 
 class NetworkController extends Controller
 {
@@ -83,7 +83,7 @@ class NetworkController extends Controller
 
         $network = Network::find($id);
 
-    
+
         $dataActualizar = [
             'nombre' => $request->nombre,
             'ip' => $request->ip,
@@ -99,7 +99,19 @@ class NetworkController extends Controller
 
         $network->save();
 
-        return redirect('/admin/networks'
+        return redirect(
+            '/admin/networks'
         );
+    }
+
+    public function showNetwork($id)
+
+
+    {
+
+        $data = $this->data;
+        $network = Network::find($id);
+        $devices = Device::where('network_id', $id)->get();
+        return view('Admin.Networks.shownetwork', compact('data', 'devices', 'network'));
     }
 }

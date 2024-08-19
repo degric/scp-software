@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 
+
 use App\Models\Lab;
 use App\Models\Network;
 
@@ -25,8 +26,12 @@ class AdminController extends Controller
 
         $networks = Network::all();
 
+        $data = new \stdClass();
+        $data->labs = $labs;
+        $data->networks = $networks;
+
         
-        return view('AdminController.home', compact('labs', 'networks'));
+        return view('AdminController.home', compact('data'));
     }
 
 }

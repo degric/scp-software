@@ -51,6 +51,16 @@ header h1 {
   
 }
 
+.btn-principal {
+    width: 10vw;
+    min-width: 10vw;
+    text-align: center;
+    height: 6.5vh;
+    padding: 10px;
+
+  
+}
+
 .menus * {
     text-align: right;
     padding-right: 5px;

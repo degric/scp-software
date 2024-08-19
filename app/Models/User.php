@@ -53,4 +53,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function labs()
+    {
+        return $this->belongsToMany(Lab::class, 'lab_user', 'user_id', 'lab_id');
+    }
 }

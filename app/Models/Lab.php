@@ -15,4 +15,8 @@ class Lab extends Model
         'red',
         'mascara_red',
     ];
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'lab_user', 'lab_id', 'user_id');
+    }
 }

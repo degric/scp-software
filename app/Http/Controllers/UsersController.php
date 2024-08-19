@@ -37,7 +37,8 @@ class UsersController extends Controller
     public function userCreate_view()
     {
         $data = $this->data;
-        return view('Admin.Users.create_view', compact('data'));
+        $labs = Lab::all();
+        return view('Admin.Users.create_view', compact('data', 'labs'));
     }
 
     public function userUpdate_view($id)
@@ -69,6 +70,10 @@ class UsersController extends Controller
             'usuario' => $request->usuario,
             'tipo_usuario' => $request->tipo_usuario,
         ]);
+
+        if ($request->tipo_usuario === 'enclab') {
+            $user->labs()->sync($request->labs); 
+        }
 
         return redirect('/admin/users');
     }
